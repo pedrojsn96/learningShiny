@@ -43,8 +43,8 @@ shinyUI(
                                     verbatimTextOutput("sumario")),
                            tabPanel("Tabela",
                                     DT::dataTableOutput("tabela"))
-        )),  
-        textOutput("texto")
+        ))  
+        #textOutput("texto")
       )
       
       

@@ -10,20 +10,37 @@ shinyServer(function(input, output) {
   # Fill in the spot we created for a plot
   output$valueNum <- renderPrint({ input$numVar })
   
+  varInput <- reactive({
+    return(input$variable)
+  })
+  
+  graficoPlot <- reactive({
+    if(input$grafico == "barras"){
+      # Render a barplot
+      return(
+        barplot(table(dados[,varInput()]), 
+              main=varInput(),
+              ylab="Frequencia",
+              xlab="Numeros"))
+    }else{
+      return(
+        # Render a pie
+        pie(table(dados[,varInput()]), 
+          main=varInput()))
+    }
+  })
+  #output$texto <- renderText(graficoPlot())
+  
   output$varPlot <- renderPlot({
-    # Render a barplot
-    barplot(table(dados[,input$variable]), 
-            main=input$variable,
-            ylab="Frequencia",
-            xlab="Numeros")
+    data <- graficoPlot()
   })
   
   output$sumario <- renderPrint({
-    summary(dados[,input$variable])
+    summary(dados[,varInput()])
   })
   output$tabela <- DT::renderDataTable({
     
-    DT::datatable(as.data.frame(table(dados[,input$variable])))
+    DT::datatable(as.data.frame(table(dados[,varInput()])))
   })
   
 })
