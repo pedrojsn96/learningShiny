@@ -1,12 +1,12 @@
 # Rely on the 'WorldPhones' dataset in the datasets
 # package (which generally comes preloaded).
 
-
+library(shinythemes)
 # Define the overall UI
 shinyUI(
   
   # Use a fluid Bootstrap layout
-  fluidPage(    
+  fluidPage(theme = shinytheme("cerulean"),    
     
     # Give the page a title
     titlePanel("App Shiny - Pedro Neto"),
