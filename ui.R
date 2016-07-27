@@ -1,5 +1,3 @@
-library(shiny)
-
 # Rely on the 'WorldPhones' dataset in the datasets
 # package (which generally comes preloaded).
 
@@ -19,8 +17,17 @@ shinyUI(
       # Define the sidebar with one input
       sidebarPanel(
         numericInput("numVar", label = "Quantidade de Variaveis:", value = 1, min = 1,max = 2),
-        selectInput("variable", "Variveis:", 
-                    choices=colnames(dados)),
+        conditionalPanel("input.numVar == 1",
+                         selectInput("variable", "Variavel X:", 
+                                     choices=colnames(dados))
+                         ),
+        conditionalPanel("input.numVar == 2",
+                         selectInput("variableX", "Variavel X:", 
+                                     choices=colnames(dados)),
+                         selectInput("variableY", "Variavel Y:", 
+                                     choices=colnames(dados))
+                         ),
+        
         selectInput("grafico", "Graficos:", 
                     choices=c("Barras" = "barras","Pizza" = "pizza")),
         hr(),
@@ -30,14 +37,14 @@ shinyUI(
       # Create a spot for the barplot
       mainPanel(
         shinyUI(navbarPage("",
-                tabPanel("Grafico",
-                         plotOutput("varPlot")),
-                tabPanel("Sumario",
-                         verbatimTextOutput("sumario")),
-                tabPanel("Tabela",
-                         DT::dataTableOutput("tabela"))
+                           tabPanel("Grafico",
+                                    plotOutput("varPlot")),
+                           tabPanel("Sumario",
+                                    verbatimTextOutput("sumario")),
+                           tabPanel("Tabela",
+                                    DT::dataTableOutput("tabela"))
         )),  
-      textOutput("texto")
+        textOutput("texto")
       )
       
       

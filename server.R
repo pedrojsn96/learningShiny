@@ -26,5 +26,4 @@ shinyServer(function(input, output) {
     DT::datatable(as.data.frame(table(dados[,input$variable])))
   })
   
-  output$texto <- renderText(input$grafico)
 })
